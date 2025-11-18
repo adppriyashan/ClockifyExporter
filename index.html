@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clockify Export - Time Tracking to Excel</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="title">⏱️ Clockify Exporter</h1>
+                <p class="subtitle">Export your time entries to Excel with ease</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="card">
+                <!-- Configuration Section -->
+                <section class="config-section">
+                    <h2 class="section-title">Configuration</h2>
+                    
+                    <div class="form-group">
+                        <label for="apiKey" class="label">
+                            <span class="label-text">API Key</span>
+                            <a href="https://app.clockify.me/user/settings" target="_blank" class="help-link">Where to find?</a>
+                        </label>
+                        <div class="input-wrapper">
+                            <input 
+                                type="password" 
+                                id="apiKey" 
+                                class="input" 
+                                placeholder="Enter your Clockify API key"
+                                autocomplete="off"
+                            >
+                            <button type="button" class="toggle-password" id="togglePassword" title="Show/Hide password">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" id="checkWorkspacesBtn" style="width: 100%; margin-bottom: 20px;">
+                        <span class="btn-icon">🔍</span>
+                        <span class="btn-text">Check Workspaces</span>
+                    </button>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="startDate" class="label">Start Date</label>
+                            <input 
+                                type="date" 
+                                id="startDate" 
+                                class="input"
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label for="endDate" class="label">End Date</label>
+                            <input 
+                                type="date" 
+                                id="endDate" 
+                                class="input"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="workspace" class="label">Workspace</label>
+                        <select id="workspace" class="input select">
+                            <option value="">Select a workspace...</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="includeDescription" class="label">
+                            <input type="checkbox" id="includeDescription" checked>
+                            <span>Include task descriptions</span>
+                        </label>
+                    </div>
+                </section>
+
+                <!-- Action Buttons -->
+                <section class="action-section">
+                    <button class="btn btn-primary" id="fetchBtn">
+                        <span class="btn-icon">🔄</span>
+                        <span class="btn-text">Fetch Records</span>
+                    </button>
+                    <button class="btn btn-secondary" id="exportBtn" disabled>
+                        <span class="btn-icon">📊</span>
+                        <span class="btn-text">Export to Excel</span>
+                    </button>
+                </section>
+
+                <!-- Loading State -->
+                <div class="loading-state" id="loadingState" style="display: none;">
+                    <div class="spinner"></div>
+                    <p id="loadingText">Fetching records...</p>
+                </div>
+
+                <!-- Status Messages -->
+                <div class="alert alert-info" id="infoAlert" style="display: none;"></div>
+                <div class="alert alert-success" id="successAlert" style="display: none;"></div>
+                <div class="alert alert-error" id="errorAlert" style="display: none;"></div>
+
+                <!-- Results Section -->
+                <section class="results-section" id="resultsSection" style="display: none;">
+                    <h2 class="section-title">Records Preview</h2>
+                    
+                    <div class="summary-stats">
+                        <div class="stat-card">
+                            <div class="stat-value" id="recordCount">0</div>
+                            <div class="stat-label">Records Found</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalTime">0h</div>
+                            <div class="stat-label">Total Time</div>
+                        </div>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table class="data-table" id="recordsTable">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Task</th>
+                                    <th>Duration</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recordsBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Made with ❤️ for efficient time tracking • Clockify Export 2025</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
